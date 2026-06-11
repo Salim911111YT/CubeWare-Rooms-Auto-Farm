@@ -85,16 +85,12 @@ while task.wait() do
 
 			prompt:InputHoldBegin()
 			prompt:InputHoldEnd()
-
-			continue
 		end
 
 		if door.Value:FindFirstChildOfClass("ClickDetector") then
 			prompt = door.Value.Door:FindFirstChildOfClass("ClickDetector")
 			task.wait()
 			fireclickdetector(prompt, (door.Value.Door.Position - plr.Character.PrimaryPart.Position).Magnitude)
-
-			continue
 		end
 	end)
 end
