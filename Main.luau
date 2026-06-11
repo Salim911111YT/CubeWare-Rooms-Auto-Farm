@@ -75,14 +75,26 @@ while task.wait() do
 
 		plr.Character.PrimaryPart.CFrame = door.Value.Door.CFrame
 
-		prompt = door.Value.Door:FindFirstChildOfClass("ProximityPrompt")
-		task.wait()
-		prompt.HoldDuration = 0
-		prompt.Enabled = true
-		prompt.MaxActivationDistance = 100;
-		prompt.RequiresLineOfSight = false
+		if door.Value:FindFirstChildOfClass("ProximityPrompt") then
+			prompt = door.Value.Door:FindFirstChildOfClass("ProximityPrompt")
+			task.wait()
+			prompt.HoldDuration = 0
+			prompt.Enabled = true
+			prompt.MaxActivationDistance = 100;
+			prompt.RequiresLineOfSight = false
 
-		prompt:InputHoldBegin()
-		prompt:InputHoldEnd()
+			prompt:InputHoldBegin()
+			prompt:InputHoldEnd()
+
+			continue
+		end
+
+		if door.Value:FindFirstChildOfClass("ClickDetector") then
+			prompt = door.Value.Door:FindFirstChildOfClass("ClickDetector")
+			task.wait()
+			fireclickdetector(prompt, (door.Value.Door.Position - plr.Character.PrimaryPart.Position).Magnitude)
+
+			continue
+		end
 	end)
 end
