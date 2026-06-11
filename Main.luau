@@ -32,9 +32,6 @@ pcall(function()
 	end
 end)
 
-noti_data["Text"] = "==> [EPILEPSY WARNING] <=="
-sendNotification()
-
 local plr = game.Players.LocalPlayer
 local door = game.ReplicatedStorage.Values["LastDoor"]
 
@@ -69,7 +66,6 @@ while task.wait() do
 		end
 
 		plr.Character.PrimaryPart.CFrame = door.Value.Door.CFrame
-		workspace.CurrentCamera.CFrame *= CFrame.Angles(math.rad(math.random(-60, 60)), math.rad(math.random(-60, 60)), math.rad(math.random(-60, 60)))
 
 		prompt = door.Value.Door:FindFirstChildOfClass("ProximityPrompt")
 		task.wait()
@@ -79,5 +75,7 @@ while task.wait() do
 		prompt.RequiresLineOfSight = false
 
 		prompt:InputHoldBegin()
+		task.wait(0.1)
+		prompt:InputHoldEnd()
 	end)
 end
