@@ -7,11 +7,6 @@ local function sendNotification()
 	game:GetService("StarterGui"):SetCore("SendNotification", noti_data)
 end
 
-noti_data["Text"] = ">== [EPILEPSY WARNING] <=="
-sendNotification()
-
-task.wait(5)
-
 pcall(function()
 	if not game:GetService("RunService"):IsClient() then
 		noti_data["Text"] = "You cannot run this on the server!"
@@ -37,6 +32,9 @@ pcall(function()
 	end
 end)
 
+noti_data["Text"] = "==> [EPILEPSY WARNING] <=="
+sendNotification()
+
 local plr = game.Players.LocalPlayer
 local door = game.ReplicatedStorage.Values["LastDoor"]
 
@@ -61,9 +59,6 @@ while task.wait() do
 	if active == false then continue end
 
 	pcall(function()
-		workspace.CurrentCamera.CFrame *= CFrame.Angles(math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)), math.rad(math.random(-360, 360)))
-		hum.CameraOffset = Vector3.new(math.random(-5, 5), math.random(-5, 5), math.random(-5, 5))
-
 		door.Value.Door.CanCollide = false
 		door.Value.Door.Transparency = 1
 
@@ -74,23 +69,15 @@ while task.wait() do
 		end
 
 		plr.Character.PrimaryPart.CFrame = door.Value.Door.CFrame
+		workspace.CurrentCamera.CFrame *= CFrame.Angles(math.rad(math.random(-60, 60)), math.rad(math.random(-60, 60)), math.rad(math.random(-60, 60)))
 
-		if door.Value:FindFirstChildOfClass("ProximityPrompt") then
-			prompt = door.Value.Door:FindFirstChildOfClass("ProximityPrompt")
-			task.wait()
-			prompt.HoldDuration = 0
-			prompt.Enabled = true
-			prompt.MaxActivationDistance = 100;
-			prompt.RequiresLineOfSight = false
+		prompt = door.Value.Door:FindFirstChildOfClass("ProximityPrompt")
+		task.wait()
+		prompt.HoldDuration = 0
+		prompt.Enabled = true
+		prompt.MaxActivationDistance = 100;
+		prompt.RequiresLineOfSight = false
 
-			prompt:InputHoldBegin()
-			prompt:InputHoldEnd()
-		end
-
-		if door.Value:FindFirstChildOfClass("ClickDetector") then
-			prompt = door.Value.Door:FindFirstChildOfClass("ClickDetector")
-			task.wait()
-			fireclickdetector(prompt, (door.Value.Door.Position - plr.Character.PrimaryPart.Position).Magnitude)
-		end
+		prompt:InputHoldBegin()
 	end)
 end
