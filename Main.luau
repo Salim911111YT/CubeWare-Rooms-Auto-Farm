@@ -3,6 +3,8 @@ local noti_data = {
 	["Text"] = "Default Text",
 }
 
+local is_safe = false
+
 local function sendNotification()
 	game:GetService("StarterGui"):SetCore("SendNotification", noti_data)
 end
@@ -15,25 +17,29 @@ pcall(function()
 		return
 	end
 
-	if not game:GetService("ReplicatedStorage") then
+	if game:GetService("ReplicatedStorage") then
 		local repStore = game:GetService("ReplicatedStorage")
 
 		if not repStore:FindFirstChild("Values") then
-			noti_data["Text"] = "Isn't a nex / jskin rooms fangame. (Error Code: 200)"
+			noti_data["Text"] = "[CUBEWARE]: Isn't a nex / jskin rooms fangame. (Error Code: 200)"
 			sendNotification()
 			return
 		end
 
 		if not repStore:WaitForChild("Values"):FindFirstChild("LastDoor") then
-			noti_data["Text"] = "Isn't a nex / jskin rooms fangame. (Error Code: 200)"
+			noti_data["Text"] = "[CUBEWARE]: Couldn't find 'LastDoor' in 'Values' in 'ReplicatedStorage'"
 			sendNotification()
 			return
 		end
 	end
+
+	is_safe = true
 end)
 
+repeat task.wait() until is_safe == true
+
 local plr = game.Players.LocalPlayer
-local door = game.ReplicatedStorage.Values["LastDoor"]
+local door = game:GetService("ReplicatedStorage").Values["LastDoor"]
 
 local prompt : ProximityPrompt = nil
 
